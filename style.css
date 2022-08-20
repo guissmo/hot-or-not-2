@@ -288,7 +288,7 @@ body {
   }
 }
 
-@media (orientation: portrait) {
+@media (max-aspect-ratio: 5/3) {
   .pane {
     height: 50vh;
     width: 100vw;
