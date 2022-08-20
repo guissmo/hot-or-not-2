@@ -1,5 +1,13 @@
+html {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   margin: 0;
+  height: 100%;
+  overflow: hidden;
   font-family: "Barlow";
 }
 
@@ -359,7 +367,7 @@ body {
   justify-content: center;
   width: 20vmin;
   height: 20vmin;
-  font-size: 3rem;
+  font-size: 10vmin;
   box-sizing: border-box;
   transform: rotate(-5deg);
   transition: color 0.2s 10ms ease-in-out, border-color 0.2s 10ms ease-in-out;
