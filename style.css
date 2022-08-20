@@ -44,10 +44,32 @@ body {
 }
 
 .pane-interior {
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
   filter: drop-shadow(1px 1px 1px #000000ee);
   background-color: white;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.rotate {
+  transform: rotate(-1deg);
+}
+
+.intro-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-evenly;
+  padding: 20px;
+  font-size: 3vmin;
+}
+
+.intro-card p {
+  text-align: center;
+}
+.place-card {
   display: grid;
   grid-template-areas:
     "photo photo"
@@ -55,7 +77,6 @@ body {
   gap: 0rem 0rem;
   grid-template-rows: 4fr 3fr;
   grid-template-columns: 3fr 3fr;
-  transform: rotate(-1deg);
 }
 
 .photo {
@@ -270,4 +291,41 @@ body {
     left: 0;
     /* animation: moveUp 0.5s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards; */
   }
+}
+
+/**/
+
+.card-container {
+  width: 80%;
+  height: 80%;
+  perspective: 1000px;
+}
+
+.card-container-inner {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.4s;
+  transform-style: preserve-3d;
+}
+
+.card-container:hover .card-container-inner {
+  transform: rotateY(180deg);
+}
+
+.card-container-front,
+.card-container-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* .card-container-front {
+  /* background-color: #bbb;
+  color: black; */
+
+.card-container-back {
+  transform: rotateY(180deg);
 }

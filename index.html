@@ -24,14 +24,41 @@
   <body>
     <div id="root">
       <div class="left pane">
-        <div class="pane-interior">
+        <div class="card-container rotate">
+          <div class="card-container-inner">
+            <div class="pane-interior intro-card card-container-front">
+              <h1>Hot or Not?</h1>
+              <p>You will be shown two locations.</p>
+              <p>
+                Guess whether the second location is hotter or colder than the
+                first.
+              </p>
+              <p>Good luck!</p>
+            </div>
+            <div class="pane-interior place-card card-container-back">
+              <div class="photo">a</div>
+              <div class="info"><p>San Francisco, San Francisco</p></div>
+              <div class="temp"><p>--25</p></div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="pane-interior">
           <div class="photo">a</div>
           <div class="info"><p>San Francisco, San Francisco</p></div>
           <div class="temp"><p>--25</p></div>
-        </div>
+        </div> -->
       </div>
       <div class="right pane">
-        <div class="pane-interior">
+        <div class="card-container">
+          <div class="card-container-inner">
+            <div class="pane-interior place-card">
+              <div class="photo">a</div>
+              <div class="info"><p>San Francisco, San Francisco</p></div>
+              <div class="temp"><p>--25</p></div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="pane-interior place-card">
           <div class="photo">a</div>
           <div class="info"><p>Andorra</p></div>
           <div class="temp">
@@ -45,7 +72,7 @@
               </button>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="right-outside pane">
         <div class="pane-interior">Andorra</div>
