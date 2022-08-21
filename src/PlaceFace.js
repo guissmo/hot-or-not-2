@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Face from "./Face";
+import { GameContext } from "./index";
 
 // side = front | back
-export default function PlaceFace({ name, temp, status, hooks, suspensing }) {
+export default function PlaceFace({ name, temp, status, suspensing }) {
+  const GCon = useContext(GameContext);
   const [tempDisplay, setTempDisplay] = useState(
     status === "waiting-for-answer" ? "?" : temp
   );
@@ -24,8 +26,8 @@ export default function PlaceFace({ name, temp, status, hooks, suspensing }) {
             <button
               className="hotter"
               onClick={() => {
-                hooks.setAnswer("hotter");
-                hooks.setGameStatus("suspensing");
+                GCon.setAnswer("hotter");
+                GCon.setGameStatus("suspensing");
               }}
             >
               <i className="fa-solid fa-angle-up"></i>
@@ -33,8 +35,8 @@ export default function PlaceFace({ name, temp, status, hooks, suspensing }) {
             <button
               className="colder"
               onClick={() => {
-                hooks.setAnswer("colder");
-                hooks.setGameStatus("suspensing");
+                GCon.setAnswer("colder");
+                GCon.setGameStatus("suspensing");
               }}
             >
               <i className="fa-solid fa-angle-down"></i>

@@ -1,70 +1,11 @@
+import React, { useState, useEffect, StrictMode } from "react";
 import "react-app-polyfill/ie9";
 import "react-app-polyfill/stable";
-import React, { useState, useEffect, StrictMode } from "react";
 import Pane from "./Pane";
-import Card from "./Card";
-import PlaceFace from "./PlaceFace";
-import IntroFace from "./IntroFace";
-import BackFace from "./BackFace";
+import CardDisplay from "./CardDisplay";
 import { createRoot } from "react-dom/client";
 
-function CardDisplay({
-  key,
-  cardInfo,
-  roundNumber,
-  answer,
-  hooks,
-  suspensing,
-}) {
-  const MyPlaceFace = (
-    <PlaceFace
-      key={key}
-      name={cardInfo.name}
-      temp={cardInfo.temp}
-      status={hooks ? "waiting-for-answer" : "static"}
-      suspensing={suspensing}
-      answer={answer}
-      hooks={hooks}
-    />
-  );
-
-  if (cardInfo.type === "intro" && roundNumber === 0) {
-    return (
-      <Card
-        key={key}
-        angle={cardInfo.angle}
-        flippable={cardInfo.type === "intro" || cardInfo.type === "back"}
-        onFlip={() => console.log("hi")}
-        front={<IntroFace />}
-        back={MyPlaceFace}
-      ></Card>
-    );
-  }
-
-  if (cardInfo.type === "back" && roundNumber === 0) {
-    return (
-      <Card
-        key={key}
-        angle={cardInfo.angle}
-        flippable={cardInfo.type === "intro" || cardInfo.type === "back"}
-        onFlip={() => console.log("hi")}
-        front={<BackFace />}
-        back={MyPlaceFace}
-      ></Card>
-    );
-  }
-
-  return (
-    <Card
-      key={key}
-      angle={cardInfo.angle}
-      flippable={cardInfo.type === "intro" || cardInfo.type === "back"}
-      onFlip={() => console.log("hi")}
-      front={MyPlaceFace}
-      back={null}
-    ></Card>
-  );
-}
+export const GameContext = React.createContext();
 
 function randomAngle(max) {
   const ret = Math.floor(Math.random() * max) + 1;
@@ -127,7 +68,9 @@ const App = () => {
   const nextCard = cardInfo[roundNumber + 2];
 
   return (
-    <>
+    <GameContext.Provider
+      value={{ roundNumber, answer, setAnswer, gameStatus, setGameStatus }}
+    >
       <button
         style={{ position: "absolute", zIndex: 100 }}
         onClick={() => {
@@ -146,37 +89,29 @@ const App = () => {
         }}
       >
         <CardDisplay
-          roundNumber={roundNumber}
           cardInfo={leftCard}
           key={roundNumber}
+          myRoundNumber={roundNumber}
         />
       </Pane>
       <Pane side={`right ${newRound !== null ? "right-move" : null}`}>
         <CardDisplay
-          roundNumber={roundNumber}
           cardInfo={rightCard}
           key={roundNumber + 1}
+          myRoundNumber={roundNumber + 1}
           suspensing={gameStatus === "suspensing"}
-          hooks={
-            gameStatus == "waiting-for-answer"
-              ? {
-                  setGameStatus,
-                  setAnswer,
-                }
-              : null
-          }
         />
       </Pane>
       {newRound !== null ? (
         <Pane side={`outside outside-enter`}>
           <CardDisplay
-            roundNumber={roundNumber}
             cardInfo={nextCard}
             key={roundNumber + 2}
+            myRoundNumber={roundNumber + 2}
           />
         </Pane>
       ) : null}
-    </>
+    </GameContext.Provider>
   );
 };
 
