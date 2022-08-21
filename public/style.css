@@ -20,7 +20,6 @@ body {
   background-color: red;
   background-color: #ffffff;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' %3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' x2='0' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%2380F'/%3E%3Cstop offset='1' stop-color='%23f40'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpattern id='b' width='24' height='24' patternUnits='userSpaceOnUse'%3E%3Ccircle fill='%23ffffff' cx='12' cy='12' r='12'/%3E%3C/pattern%3E%3Crect width='100%25' height='100%25' fill='url(%23a)'/%3E%3Crect width='100%25' height='100%25' fill='url(%23b)' fill-opacity='0.1'/%3E%3C/svg%3E");
-  background-attachment: fixed;
 }
 
 .pane {
@@ -38,7 +37,7 @@ body {
 }
 
 .left-out {
-  animation: exitLeft 0.5s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
+  animation: exitLeft 0.5s 0.2s cubic-bezier(0.6, -0.18, 0.735, 0.045) forwards;
 }
 
 .right {
@@ -47,7 +46,7 @@ body {
 }
 
 .right-move {
-  animation: moveLeft 0.5s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
+  animation: moveLeft 0.5s 0.2s cubic-bezier(0.6, -0.18, 0.735, 0.045) forwards;
 }
 
 .outside {
@@ -56,8 +55,7 @@ body {
 }
 
 .outside-enter {
-  animation: enterLeft 0.5s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955)
-    forwards;
+  animation: enterLeft 0.5s 0.2s cubic-bezier(0.6, -0.18, 0.735, 0.045) forwards;
 }
 
 .pane-interior {
@@ -152,6 +150,9 @@ body {
   width: 100%;
   background-color: darkgray;
   opacity: 0.9;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .temp p {
@@ -166,11 +167,11 @@ body {
 }
 
 .temp-overlay button {
-  height: 50%;
+  height: 33%;
   width: 100%;
   border: 0;
   cursor: pointer;
-  background-color: lightgray;
+  background-color: inherit;
   box-shadow: none;
   border-radius: 0px;
   font-family: "Barlow";
@@ -191,12 +192,12 @@ body {
 }
 
 .hotter-fade-out {
-  animation: slideOutUp 0.5s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955)
+  animation: slideOutUp 0.5s 0.2s cubic-bezier(0.6, -0.18, 0.735, 0.045)
     forwards;
 }
 
 .colder-fade-out {
-  animation: slideOutDown 0.5s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955)
+  animation: slideOutDown 0.5s 0.2s cubic-bezier(0.6, -0.18, 0.735, 0.045)
     forwards;
 }
 
@@ -324,7 +325,7 @@ body {
   }
 
   .left-out {
-    animation: exitUp 0.5s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
+    animation: exitUp 0.5s 0.2s cubic-bezier(0.6, -0.18, 0.735, 0.045) forwards;
   }
 
   .right {
@@ -333,7 +334,7 @@ body {
   }
 
   .right-move {
-    animation: moveUp 0.5s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
+    animation: moveUp 0.5s 0.2s cubic-bezier(0.6, -0.18, 0.735, 0.045) forwards;
   }
 
   .outside {
@@ -342,8 +343,16 @@ body {
   }
 
   .outside-enter {
-    animation: enterUp 0.5s 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955)
-      forwards;
+    animation: enterUp 0.5s 0.2s cubic-bezier(0.6, -0.18, 0.735, 0.045) forwards;
+  }
+
+  .temp-overlay {
+    flex-direction: row-reverse;
+  }
+
+  .temp-overlay button {
+    height: 100%;
+    width: 33%;
   }
 }
 

@@ -1,27 +1,26 @@
 import React, { useState } from "react";
 
 export default function Card({
-  children,
   angle = 0,
-  flippable,
+  front = null,
+  back = null,
   onFlip = null,
 }) {
   const [visibleFace, setVisibleFace] = useState("front");
-  console.log(onFlip);
 
   let faces;
-  if (flippable) {
+  if (back !== null) {
     faces = (
       <>
-        <div className={`pane-interior card-container-front`}>
-          {children[0]}
-        </div>
-        <div className={`pane-interior card-container-back`}>{children[1]}</div>
+        <div className={`pane-interior card-container-front`}>{front}</div>
+        <div className={`pane-interior card-container-back`}>{back}</div>
       </>
     );
   } else {
     faces = (
-      <div className={`pane-interior card-container-front`}>{children}</div>
+      <>
+        <div className={`pane-interior card-container-front`}>{front}</div>
+      </>
     );
   }
 
@@ -34,8 +33,10 @@ export default function Card({
         className={`card-container-inner ${
           visibleFace === "front" ? null : "card-container-inner-animate"
         }`}
-        onClick={() => setVisibleFace("back")}
-        onAnimationEnd={flippable ? onFlip() : console.log("none")}
+        onClick={() => {
+          return back !== null ? setVisibleFace("back") : null;
+        }}
+        onAnimationEnd={back !== null ? onFlip() : console.log("none")}
       >
         {faces}
       </div>

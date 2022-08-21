@@ -8,37 +8,91 @@ import IntroFace from "./IntroFace";
 import BackFace from "./BackFace";
 import { createRoot } from "react-dom/client";
 
+function CardDisplay({ key, cardInfo, roundTwoStarted }) {
+  console.log(cardInfo.type);
+  if (cardInfo.type === "intro" && !roundTwoStarted) {
+    return (
+      <Card
+        key={key}
+        angle={cardInfo.angle}
+        flippable={cardInfo.type === "intro" || cardInfo.type === "back"}
+        onFlip={() => console.log("hi")}
+        front={<IntroFace />}
+        back={<PlaceFace name={cardInfo.name} temp={cardInfo.temp} />}
+      ></Card>
+    );
+  }
+
+  if (cardInfo.type === "back" && !roundTwoStarted) {
+    return (
+      <Card
+        key={key}
+        angle={cardInfo.angle}
+        flippable={cardInfo.type === "intro" || cardInfo.type === "back"}
+        onFlip={() => console.log("hi")}
+        front={<BackFace />}
+        back={<PlaceFace name={cardInfo.name} temp={cardInfo.temp} />}
+      ></Card>
+    );
+  }
+
+  return (
+    <Card
+      key={key}
+      angle={cardInfo.angle}
+      flippable={cardInfo.type === "intro" || cardInfo.type === "back"}
+      onFlip={() => console.log("hi")}
+      front={<PlaceFace name={cardInfo.name} temp={cardInfo.temp} />}
+      back={null}
+    ></Card>
+  );
+}
+
 function randomAngle(max) {
   const ret = Math.floor(Math.random() * max) + 1;
   return ret;
 }
 
 function newCard(num) {
-  const rnum = randomAngle(1000000);
-  return (
-    <Card key={rnum} angle={randomAngle(5) * (num % 2 ? 1 : -1)}>
-      <PlaceFace name={"newCard" + rnum} temp={rnum} />
-    </Card>
-  );
+  const rnum = randomAngle(2);
+  return {
+    key: rnum,
+    angle: randomAngle(5) * (num % 2 ? 1 : -1),
+    name: "newCard" + rnum,
+    temp: rnum,
+  };
 }
 
 const App = () => {
-  const [newDisplay, setNewDisplay] = useState(null);
-  const [displayed, setDisplayed] = useState({
-    left: (
-      <Card angle={-1} onFlip={() => console.log("flipped")} flippable>
-        <IntroFace />
-        <PlaceFace name={"Hello"} temp={21} />
-      </Card>
-    ),
-    right: (
-      <Card angle={3} onFlip={() => console.log("flipped")} flippable>
-        <BackFace />
-        <PlaceFace name={"Yee"} temp={-1} />
-      </Card>
-    ),
-  });
-  const [roundNumber, setRoundNumber] = useState(1);
+  const [roundNumber, setRoundNumber] = useState(0);
+  const [newRound, setNewRound] = useState(null);
+  // const [flipped, setFlipped] = useState(0);
+  // const [answer, setAnswer] = useState("waiting-for-answer"); // waiting-for-answer | higher | lower
+
+  const cardInfo = [
+    {
+      angle: -1,
+      type: "intro",
+      name: "Hi",
+      temp: 20,
+    },
+    {
+      angle: 2,
+      type: "back",
+      name: "Yo",
+      temp: -5,
+    },
+    {
+      angle: -4,
+      name: "Wee",
+      temp: 33,
+    },
+    {
+      angle: 1,
+      name: "Yikes",
+      temp: 0,
+    },
+  ];
 
   useEffect(() => {
     if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
@@ -48,35 +102,50 @@ const App = () => {
     }
   });
 
+  const leftCard = cardInfo[roundNumber];
+  const rightCard = cardInfo[roundNumber + 1];
+  const nextCard = cardInfo[roundNumber + 2];
+
   return (
     <>
       <button
         style={{ position: "absolute", zIndex: 100 }}
         onClick={() => {
           console.log("clicked");
-          setNewDisplay(newCard(roundNumber));
-          setRoundNumber(roundNumber + 1);
+          cardInfo.push(newCard(roundNumber));
+          setNewRound(roundNumber + 1);
         }}
       >
         Hi
       </button>
       <Pane
-        side={`left ${newDisplay ? "left-out" : null}`}
+        side={`left ${newRound !== null ? "left-out" : null}`}
         onAnimationEnd={() => {
-          setDisplayed({
-            left: displayed.right,
-            right: newDisplay,
-          });
-          setNewDisplay(null);
+          setNewRound(null);
+          setRoundNumber(roundNumber + 1);
         }}
       >
-        {displayed.left}
+        <CardDisplay
+          roundTwoStarted={roundNumber > 0}
+          cardInfo={leftCard}
+          key={roundNumber}
+        />
       </Pane>
-      <Pane side={`right ${newDisplay ? "right-move" : null}`}>
-        {displayed.right}
+      <Pane side={`right ${newRound !== null ? "right-move" : null}`}>
+        <CardDisplay
+          roundTwoStarted={roundNumber > 0}
+          cardInfo={rightCard}
+          key={roundNumber + 1}
+        />
       </Pane>
-      {newDisplay ? (
-        <Pane side={`outside outside-enter`}>{newDisplay}</Pane>
+      {newRound !== null ? (
+        <Pane side={`outside outside-enter`}>
+          <CardDisplay
+            roundTwoStarted={roundNumber > 0}
+            cardInfo={nextCard}
+            key={roundNumber + 2}
+          />
+        </Pane>
       ) : null}
     </>
   );
