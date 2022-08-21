@@ -90,8 +90,8 @@ export default function TemperatureDisplay({ temp, showOverlay, activeCard }) {
   const GCon = useContext(GameContext);
   console.log(temp, showOverlay);
 
-  function answerChosen() {
-    suspenser(GCon.shownTemperature(), temp, "colder", 10).map(([x, y]) => {
+  function answerChosen(answer) {
+    suspenser(GCon.shownTemperature(), temp, answer, 10).map(([x, y]) => {
       if (!Number.isNaN(x)) setTimeout(() => setDummyTemp(x), y);
       else
         setTimeout(() => {

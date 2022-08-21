@@ -12,7 +12,7 @@ export default function TemperatureOverlay({ answerChosen }) {
             ? () => {
                 GCon.setAnswer("hotter");
                 GCon.setGameStatus("suspensing");
-                answerChosen();
+                answerChosen("hotter");
               }
             : null
         }
@@ -26,7 +26,7 @@ export default function TemperatureOverlay({ answerChosen }) {
             ? () => {
                 GCon.setAnswer("colder");
                 GCon.setGameStatus("suspensing");
-                answerChosen();
+                answerChosen("colder");
               }
             : null
         }
