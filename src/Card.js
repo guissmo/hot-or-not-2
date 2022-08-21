@@ -1,7 +1,12 @@
 import React, { useState, useContext } from "react";
 import { GameContext } from "./index";
 
-export default function Card({ angle = 0, front = null, back = null }) {
+export default function Card({
+  angle = 0,
+  front = null,
+  back = null,
+  activeCard = false,
+}) {
   const [visibleFace, setVisibleFace] = useState("front");
   const GCon = useContext(GameContext);
 
@@ -39,6 +44,13 @@ export default function Card({ angle = 0, front = null, back = null }) {
       >
         {faces}
       </div>
+      {GCon.gameStatus === "answer-shown" && activeCard ? (
+        <button className="next-button" onClick={GCon.startNewRound}>
+          <p>
+            <i className="fa-solid fa-play"></i>
+          </p>
+        </button>
+      ) : null}
     </div>
   );
 

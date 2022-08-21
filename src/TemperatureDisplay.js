@@ -96,7 +96,14 @@ export default function TemperatureDisplay({ temp, showOverlay, activeCard }) {
       else
         setTimeout(() => {
           setTempDisplay(temp);
-          GCon.setGameStatus("answer-shown");
+          if (
+            (GCon.shownTemperature() <= temp && answer === "hotter") ||
+            (GCon.shownTemperature() >= temp && answer === "colder")
+          ) {
+            GCon.setGameStatus("answer-shown");
+          } else {
+            GCon.setGameStatus("game-over");
+          }
         }, y);
     });
   }

@@ -10,6 +10,7 @@ export default function CardDisplay({
   cardInfo,
   myRoundNumber,
   suspensing,
+  showOverlayOverride,
 }) {
   const GCon = useContext(GameContext);
   const activeCard = myRoundNumber === GCon.roundNumber + 1;
@@ -19,7 +20,10 @@ export default function CardDisplay({
       name={cardInfo.name}
       temp={cardInfo.temp}
       activeCard={activeCard}
-      showOverlay={GCon.answer === "waiting-for-answer" && activeCard}
+      showOverlay={
+        (GCon.answer === "waiting-for-answer" && activeCard) ||
+        showOverlayOverride
+      }
       suspensing={suspensing}
     />
   );
@@ -34,6 +38,7 @@ export default function CardDisplay({
           console.log("yeaaa");
           // GCon.setFlipped(GCon.flipped + 1);
         }}
+        activeCard={activeCard}
         front={<IntroFace />}
         back={MyPlaceFace}
       ></Card>
@@ -47,6 +52,7 @@ export default function CardDisplay({
         angle={cardInfo.angle}
         flippable={cardInfo.type === "intro" || cardInfo.type === "back"}
         onFlip={() => console.log("hi")}
+        activeCard={activeCard}
         front={<BackFace />}
         back={MyPlaceFace}
       ></Card>
@@ -59,6 +65,7 @@ export default function CardDisplay({
       angle={cardInfo.angle}
       flippable={cardInfo.type === "intro" || cardInfo.type === "back"}
       onFlip={() => console.log("hi")}
+      activeCard={activeCard}
       front={MyPlaceFace}
       back={null}
     ></Card>

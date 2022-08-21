@@ -81,14 +81,14 @@ const App = () => {
         flipped,
         setFlipped,
         shownTemperature,
+        startNewRound,
       }}
     >
       <button
         style={{ position: "absolute", zIndex: 100 }}
         onClick={() => {
           console.log("clicked");
-          cardInfo.push(newCard(roundNumber));
-          setNewRound(roundNumber + 1);
+          startNewRound();
         }}
       >
         Hi
@@ -98,6 +98,8 @@ const App = () => {
         onAnimationEnd={() => {
           setNewRound(null);
           setRoundNumber(roundNumber + 1);
+          setGameStatus("started");
+          setAnswer("waiting-for-answer");
         }}
       >
         <CardDisplay
@@ -120,11 +122,18 @@ const App = () => {
             cardInfo={nextCard}
             key={roundNumber + 2}
             myRoundNumber={roundNumber + 2}
+            showOverlayOverride={true}
           />
         </Pane>
       ) : null}
     </GameContext.Provider>
   );
+
+  function startNewRound() {
+    cardInfo.push(newCard(roundNumber));
+    setGameStatus("transitioning");
+    setNewRound(roundNumber + 1);
+  }
 };
 
 const container = document.getElementById("root");
