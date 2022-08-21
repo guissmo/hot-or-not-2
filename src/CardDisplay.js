@@ -12,13 +12,14 @@ export default function CardDisplay({
   suspensing,
 }) {
   const GCon = useContext(GameContext);
-  const activeRound = myRoundNumber === GCon.roundNumber + 1;
+  const activeCard = myRoundNumber === GCon.roundNumber + 1;
   const MyPlaceFace = (
     <PlaceFace
       key={key}
       name={cardInfo.name}
       temp={cardInfo.temp}
-      status={activeRound ? "waiting-for-answer" : "else"}
+      activeCard={activeCard}
+      showOverlay={GCon.answer === "waiting-for-answer" && activeCard}
       suspensing={suspensing}
     />
   );

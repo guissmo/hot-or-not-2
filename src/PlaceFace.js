@@ -1,57 +1,19 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import Face from "./Face";
-import { GameContext } from "./index";
+import TemperatureDisplay from "./TemperatureDisplay";
 
-// side = front | back
-export default function PlaceFace({ name, temp, status, suspensing }) {
-  const GCon = useContext(GameContext);
-  const [tempDisplay, setTempDisplay] = useState(
-    status === "waiting-for-answer" ? "?" : temp
-  );
-
-  if (suspensing) {
-    setTimeout(() => setTempDisplay(Math.floor(Math.random() * 70) - 20), 150);
-  }
-
+export default function PlaceFace({ name, temp, showOverlay, activeCard }) {
   return (
     <Face className="place-card">
       <div className="photo">a</div>
       <div className="info">
         <p>{name}</p>
       </div>
-      <div className="temp">
-        <p>{tempDisplay}</p>
-        {status === "waiting-for-answer" ? (
-          <div className="temp-overlay">
-            <button
-              className="hotter"
-              onClick={
-                GCon.gameStatus === "started"
-                  ? () => {
-                      GCon.setAnswer("hotter");
-                      GCon.setGameStatus("suspensing");
-                    }
-                  : null
-              }
-            >
-              <i className="fa-solid fa-angle-up"></i>
-            </button>
-            <button
-              className="colder"
-              onClick={
-                GCon.gameStatus === "started"
-                  ? () => {
-                      GCon.setAnswer("colder");
-                      GCon.setGameStatus("suspensing");
-                    }
-                  : null
-              }
-            >
-              <i className="fa-solid fa-angle-down"></i>
-            </button>
-          </div>
-        ) : null}
-      </div>
+      <TemperatureDisplay
+        temp={temp}
+        showOverlay={showOverlay}
+        activeCard={activeCard}
+      />
     </Face>
   );
 }

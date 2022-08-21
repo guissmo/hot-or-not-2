@@ -29,8 +29,6 @@ const App = () => {
   const [flipped, setFlipped] = useState(0);
   const [answer, setAnswer] = useState("waiting-for-answer"); // waiting-for-answer | higher | lower
 
-  console.log(answer, setGameStatus);
-
   const cardInfo = [
     {
       angle: -1,
@@ -56,6 +54,10 @@ const App = () => {
     },
   ];
 
+  function shownTemperature() {
+    return cardInfo[roundNumber].temp;
+  }
+
   useEffect(() => {
     if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
       console.log("DEVELOPMENT");
@@ -78,6 +80,7 @@ const App = () => {
         setGameStatus,
         flipped,
         setFlipped,
+        shownTemperature,
       }}
     >
       <button
