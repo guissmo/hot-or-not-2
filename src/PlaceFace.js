@@ -25,19 +25,27 @@ export default function PlaceFace({ name, temp, status, suspensing }) {
           <div className="temp-overlay">
             <button
               className="hotter"
-              onClick={() => {
-                GCon.setAnswer("hotter");
-                GCon.setGameStatus("suspensing");
-              }}
+              onClick={
+                GCon.gameStatus === "started"
+                  ? () => {
+                      GCon.setAnswer("hotter");
+                      GCon.setGameStatus("suspensing");
+                    }
+                  : null
+              }
             >
               <i className="fa-solid fa-angle-up"></i>
             </button>
             <button
               className="colder"
-              onClick={() => {
-                GCon.setAnswer("colder");
-                GCon.setGameStatus("suspensing");
-              }}
+              onClick={
+                GCon.gameStatus === "started"
+                  ? () => {
+                      GCon.setAnswer("colder");
+                      GCon.setGameStatus("suspensing");
+                    }
+                  : null
+              }
             >
               <i className="fa-solid fa-angle-down"></i>
             </button>

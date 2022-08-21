@@ -29,7 +29,10 @@ export default function CardDisplay({
         key={key}
         angle={cardInfo.angle}
         flippable={cardInfo.type === "intro" || cardInfo.type === "back"}
-        onFlip={() => console.log("hi")}
+        onFlip={() => {
+          console.log("yeaaa");
+          // GCon.setFlipped(GCon.flipped + 1);
+        }}
         front={<IntroFace />}
         back={MyPlaceFace}
       ></Card>

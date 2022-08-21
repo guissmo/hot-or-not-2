@@ -25,7 +25,8 @@ function newCard(num) {
 const App = () => {
   const [roundNumber, setRoundNumber] = useState(0);
   const [newRound, setNewRound] = useState(null);
-  const [gameStatus, setGameStatus] = useState("waiting-for-answer");
+  const [gameStatus, setGameStatus] = useState("not-started");
+  const [flipped, setFlipped] = useState(0);
   const [answer, setAnswer] = useState("waiting-for-answer"); // waiting-for-answer | higher | lower
 
   console.log(answer, setGameStatus);
@@ -69,7 +70,15 @@ const App = () => {
 
   return (
     <GameContext.Provider
-      value={{ roundNumber, answer, setAnswer, gameStatus, setGameStatus }}
+      value={{
+        roundNumber,
+        answer,
+        setAnswer,
+        gameStatus,
+        setGameStatus,
+        flipped,
+        setFlipped,
+      }}
     >
       <button
         style={{ position: "absolute", zIndex: 100 }}
