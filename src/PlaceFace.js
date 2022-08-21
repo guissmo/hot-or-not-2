@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import Face from "./Face";
 
 // side = front | back
-export default function PlaceFace({ name, temp, status, setAnswer }) {
+export default function PlaceFace({ name, temp, status, hooks, suspensing }) {
+  const [tempDisplay, setTempDisplay] = useState(
+    status === "waiting-for-answer" ? "?" : temp
+  );
+
+  if (suspensing) {
+    setTimeout(() => setTempDisplay(Math.floor(Math.random() * 70) - 20), 150);
+  }
+
   return (
     <Face className="place-card">
       <div className="photo">a</div>
@@ -10,13 +18,25 @@ export default function PlaceFace({ name, temp, status, setAnswer }) {
         <p>{name}</p>
       </div>
       <div className="temp">
-        <p>{status === "asking" ? "?" : temp}</p>
-        {status === "asking" ? (
+        <p>{tempDisplay}</p>
+        {status === "waiting-for-answer" ? (
           <div className="temp-overlay">
-            <button className="hotter" onClick={() => setAnswer("hotter")}>
+            <button
+              className="hotter"
+              onClick={() => {
+                hooks.setAnswer("hotter");
+                hooks.setGameStatus("suspensing");
+              }}
+            >
               <i className="fa-solid fa-angle-up"></i>
             </button>
-            <button className="colder" onClick={() => setAnswer("colder")}>
+            <button
+              className="colder"
+              onClick={() => {
+                hooks.setAnswer("colder");
+                hooks.setGameStatus("suspensing");
+              }}
+            >
               <i className="fa-solid fa-angle-down"></i>
             </button>
           </div>

@@ -8,9 +8,27 @@ import IntroFace from "./IntroFace";
 import BackFace from "./BackFace";
 import { createRoot } from "react-dom/client";
 
-function CardDisplay({ key, cardInfo, roundTwoStarted }) {
-  console.log(cardInfo.type);
-  if (cardInfo.type === "intro" && !roundTwoStarted) {
+function CardDisplay({
+  key,
+  cardInfo,
+  roundNumber,
+  answer,
+  hooks,
+  suspensing,
+}) {
+  const MyPlaceFace = (
+    <PlaceFace
+      key={key}
+      name={cardInfo.name}
+      temp={cardInfo.temp}
+      status={hooks ? "waiting-for-answer" : "static"}
+      suspensing={suspensing}
+      answer={answer}
+      hooks={hooks}
+    />
+  );
+
+  if (cardInfo.type === "intro" && roundNumber === 0) {
     return (
       <Card
         key={key}
@@ -18,12 +36,12 @@ function CardDisplay({ key, cardInfo, roundTwoStarted }) {
         flippable={cardInfo.type === "intro" || cardInfo.type === "back"}
         onFlip={() => console.log("hi")}
         front={<IntroFace />}
-        back={<PlaceFace name={cardInfo.name} temp={cardInfo.temp} />}
+        back={MyPlaceFace}
       ></Card>
     );
   }
 
-  if (cardInfo.type === "back" && !roundTwoStarted) {
+  if (cardInfo.type === "back" && roundNumber === 0) {
     return (
       <Card
         key={key}
@@ -31,7 +49,7 @@ function CardDisplay({ key, cardInfo, roundTwoStarted }) {
         flippable={cardInfo.type === "intro" || cardInfo.type === "back"}
         onFlip={() => console.log("hi")}
         front={<BackFace />}
-        back={<PlaceFace name={cardInfo.name} temp={cardInfo.temp} />}
+        back={MyPlaceFace}
       ></Card>
     );
   }
@@ -42,7 +60,7 @@ function CardDisplay({ key, cardInfo, roundTwoStarted }) {
       angle={cardInfo.angle}
       flippable={cardInfo.type === "intro" || cardInfo.type === "back"}
       onFlip={() => console.log("hi")}
-      front={<PlaceFace name={cardInfo.name} temp={cardInfo.temp} />}
+      front={MyPlaceFace}
       back={null}
     ></Card>
   );
@@ -66,8 +84,10 @@ function newCard(num) {
 const App = () => {
   const [roundNumber, setRoundNumber] = useState(0);
   const [newRound, setNewRound] = useState(null);
-  // const [flipped, setFlipped] = useState(0);
-  // const [answer, setAnswer] = useState("waiting-for-answer"); // waiting-for-answer | higher | lower
+  const [gameStatus, setGameStatus] = useState("waiting-for-answer");
+  const [answer, setAnswer] = useState("waiting-for-answer"); // waiting-for-answer | higher | lower
+
+  console.log(answer, setGameStatus);
 
   const cardInfo = [
     {
@@ -126,22 +146,31 @@ const App = () => {
         }}
       >
         <CardDisplay
-          roundTwoStarted={roundNumber > 0}
+          roundNumber={roundNumber}
           cardInfo={leftCard}
           key={roundNumber}
         />
       </Pane>
       <Pane side={`right ${newRound !== null ? "right-move" : null}`}>
         <CardDisplay
-          roundTwoStarted={roundNumber > 0}
+          roundNumber={roundNumber}
           cardInfo={rightCard}
           key={roundNumber + 1}
+          suspensing={gameStatus === "suspensing"}
+          hooks={
+            gameStatus == "waiting-for-answer"
+              ? {
+                  setGameStatus,
+                  setAnswer,
+                }
+              : null
+          }
         />
       </Pane>
       {newRound !== null ? (
         <Pane side={`outside outside-enter`}>
           <CardDisplay
-            roundTwoStarted={roundNumber > 0}
+            roundNumber={roundNumber}
             cardInfo={nextCard}
             key={roundNumber + 2}
           />
