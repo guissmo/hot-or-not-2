@@ -7,20 +7,28 @@ import { createRoot } from "react-dom/client";
 
 export const GameContext = React.createContext();
 
+function randomInteger(max) {
+  const ret = Math.floor(Math.random() * max);
+  return ret;
+}
+
 function randomAngle(max) {
   const ret = Math.floor(Math.random() * max) + 1;
   return ret;
 }
 
 function newCard(num) {
-  const rnum = randomAngle(2);
+  const myTemp = randomInteger(10) - 5;
   return {
-    key: rnum,
     angle: randomAngle(5) * (num % 2 ? 1 : -1),
-    name: "newCard" + rnum,
-    temp: rnum,
+    name: "newCard", // + myTemp,
+    temp: myTemp,
   };
 }
+
+const cardInfo = [];
+cardInfo.push({ ...newCard(0), type: "intro" });
+cardInfo.push({ ...newCard(1), type: "back" });
 
 const App = () => {
   const [roundNumber, setRoundNumber] = useState(0);
@@ -28,31 +36,6 @@ const App = () => {
   const [gameStatus, setGameStatus] = useState("not-started");
   const [flipped, setFlipped] = useState(0);
   const [answer, setAnswer] = useState("waiting-for-answer"); // waiting-for-answer | higher | lower
-
-  const cardInfo = [
-    {
-      angle: -1,
-      type: "intro",
-      name: "Hi",
-      temp: 20,
-    },
-    {
-      angle: 2,
-      type: "back",
-      name: "Yo",
-      temp: -5,
-    },
-    {
-      angle: -4,
-      name: "Wee",
-      temp: 33,
-    },
-    {
-      angle: 1,
-      name: "Yikes",
-      temp: 0,
-    },
-  ];
 
   function shownTemperature() {
     return cardInfo[roundNumber].temp;
@@ -86,10 +69,7 @@ const App = () => {
     >
       <button
         style={{ position: "absolute", zIndex: 100 }}
-        onClick={() => {
-          console.log("clicked");
-          startNewRound();
-        }}
+        onClick={startNewRound}
       >
         Hi
       </button>
@@ -131,6 +111,7 @@ const App = () => {
 
   function startNewRound() {
     cardInfo.push(newCard(roundNumber));
+    console.log(cardInfo);
     setGameStatus("transitioning");
     setNewRound(roundNumber + 1);
   }

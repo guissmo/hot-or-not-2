@@ -88,7 +88,6 @@ export default function TemperatureDisplay({ temp, showOverlay, activeCard }) {
   const [tempDisplay, setTempDisplay] = useState(activeCard ? "?" : temp);
   const [dummyTemp, setDummyTemp] = useState(2);
   const GCon = useContext(GameContext);
-  console.log(temp, showOverlay);
 
   function answerChosen(answer) {
     suspenser(GCon.shownTemperature(), temp, answer, 10).map(([x, y]) => {

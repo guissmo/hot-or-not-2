@@ -67,6 +67,32 @@ body {
   box-sizing: border-box;
 }
 
+.scale-in {
+  animation: scaleIn 0.2s 0s cubic-bezier(0.6, -0.18, 0.735, 0.045) forwards;
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.peek-out {
+  animation: peekOut 0.5s 0s cubic-bezier(0.6, -0.18, 0.735, 0.045) forwards;
+}
+
+@keyframes peekOut {
+  100% {
+    bottom: -50vh;
+  }
+}
+
 /* .rotate {
   transform: rotate(-1deg);
 }
@@ -353,6 +379,12 @@ body {
   .temp-overlay button {
     height: 100%;
     width: 33%;
+  }
+
+  @keyframes peekOut {
+    100% {
+      right: -50vw;
+    }
   }
 }
 

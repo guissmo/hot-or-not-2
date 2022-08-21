@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { GameContext } from "./index";
+import NextRoundButton from "./NextRoundButton";
 
 export default function Card({
   angle = 0,
@@ -44,12 +45,10 @@ export default function Card({
       >
         {faces}
       </div>
-      {GCon.gameStatus === "answer-shown" && activeCard ? (
-        <button className="next-button" onClick={GCon.startNewRound}>
-          <p>
-            <i className="fa-solid fa-play"></i>
-          </p>
-        </button>
+      {(GCon.gameStatus === "answer-shown" ||
+        GCon.gameStatus === "transitioning") &&
+      activeCard ? (
+        <NextRoundButton />
       ) : null}
     </div>
   );
