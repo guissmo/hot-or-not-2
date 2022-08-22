@@ -4,6 +4,7 @@ import "react-app-polyfill/stable";
 import Pane from "./Pane";
 import CardDisplay from "./CardDisplay";
 import { createRoot } from "react-dom/client";
+import Modal from "./Modal";
 
 export const GameContext = React.createContext();
 
@@ -53,6 +54,20 @@ const App = () => {
   const rightCard = cardInfo[roundNumber + 1];
   const nextCard = cardInfo[roundNumber + 2];
 
+  const gameOverModal = (
+    <Modal>
+      <div className="pane" style={{ width: "100%", height: "100%" }}>
+        <div className="card-container rotate game-over">
+          <div className="card-container-inner">
+            <div className="pane-interior game-over-card card-container-front">
+              <p>Game Over</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Modal>
+  );
+
   return (
     <GameContext.Provider
       value={{
@@ -67,6 +82,7 @@ const App = () => {
         startNewRound,
       }}
     >
+      {gameStatus === "game-over" ? gameOverModal : null}
       <button
         style={{ position: "absolute", zIndex: 100 }}
         onClick={startNewRound}

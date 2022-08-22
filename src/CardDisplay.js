@@ -59,6 +59,19 @@ export default function CardDisplay({
     );
   }
 
+  if (cardInfo.type === "game-over" && GCon.roundNumber === 0) {
+    return (
+      <Card
+        key={key}
+        angle={cardInfo.angle}
+        flippable={false}
+        activeCard={false}
+        front={"Hello"}
+        back={null}
+      ></Card>
+    );
+  }
+
   return (
     <Card
       key={key}
