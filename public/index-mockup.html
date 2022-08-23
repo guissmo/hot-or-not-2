@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="modal">
+    <div id="modal" style="visibility: hidden">
       <div class="pane" style="width: 100%; height: 100%">
         <div class="card-container rotate game-over">
           <div class="card-container-inner">
@@ -54,15 +54,24 @@
         <div class="card-container" style="transform: rotate(-3deg)">
           <div class="card-container-inner null">
             <div class="pane-interior card-container-front">
-              <div class="pane-interior intro-card">
-                <p>This is the intro face.</p>
+              <div class="pane-interior place-card">
+                <div class="photo">
+                  <!-- <img
+                    src="https://d13k13wj6adfdf.cloudfront.net/urban_areas/manila-5150275531.jpg"
+                    style="object-fit: cover; width: 100%"
+                  /> -->
+                  <img
+                    src="https://d13k13wj6adfdf.cloudfront.net/urban_areas/paris-0ae0bb626e.jpg"
+                    style="object-fit: cover; width: 100%"
+                  />
+                </div>
+                <div class="info"><p>newCard</p></div>
+                <div class="temp"><p>-2</p></div>
               </div>
             </div>
             <div class="pane-interior card-container-back">
-              <div class="pane-interior place-card">
-                <div class="photo">a</div>
-                <div class="info"><p>newCard</p></div>
-                <div class="temp"><p>-2</p></div>
+              <div class="pane-interior intro-card">
+                <p>This is the intro face.</p>
               </div>
             </div>
           </div>

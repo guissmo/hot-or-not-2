@@ -6,6 +6,7 @@ import CardDisplay from "./CardDisplay";
 import { createRoot } from "react-dom/client";
 import Modal from "./Modal";
 import GameOverModal from "./GameOverModal";
+import { getCityName } from "./cities";
 
 export const GameContext = React.createContext();
 
@@ -19,18 +20,17 @@ function randomAngle(max) {
   return ret;
 }
 
-function newCard(num) {
+async function newCard(num) {
+  const cityId = randomInteger(200);
   const myTemp = randomInteger(10) - 5;
+  const name = await getCityName(cityId);
+  console.log("wee" + name);
   return {
     angle: randomAngle(5) * (num % 2 ? 1 : -1),
-    name: "newCard" + myTemp,
+    name, // + myTemp,
     temp: myTemp,
   };
 }
-
-const cardInfo = [];
-cardInfo.push({ ...newCard(0), type: "intro" });
-cardInfo.push({ ...newCard(1), type: "back" });
 
 const App = () => {
   const [roundNumber, setRoundNumber] = useState(0);
@@ -40,6 +40,20 @@ const App = () => {
   const [answer, setAnswer] = useState("waiting-for-answer"); // waiting-for-answer | higher | lower
   const [score, setScore] = useState(0);
   const [finalScore, setFinalScore] = useState(0);
+  const [cardInfo, setCardInfo] = useState([]);
+  const [loadedInitialCards, setLoadedInitialCards] = useState(false);
+
+  // async function pushCard() {
+  //   const introCard = await newCard(0);
+  //   const secondCard = await newCard(1);
+  //   setCardInfo(
+  //     cardInfo.concat([
+  //       { ...introCard, type: "intro" },
+  //       { ...secondCard, type: "back" },
+  //     ])
+  //   );
+  //   setLoadedInitialCards(true);
+  // }
 
   function shownTemperature() {
     return cardInfo[roundNumber].temp;
@@ -51,7 +65,33 @@ const App = () => {
     } else {
       console.log("PRODUCTION");
     }
-  });
+  }, []);
+
+  useEffect(
+    () =>
+      async function () {
+        if (!loadedInitialCards) {
+          const introCard = await newCard(0);
+          const secondCard = await newCard(1);
+          setLoadedInitialCards(true);
+          setCardInfo(
+            cardInfo.concat([
+              { ...introCard, type: "intro" },
+              { ...secondCard, type: "back" },
+            ])
+          );
+        }
+      },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
+  /*** SKELETON ***/
+  if (!loadedInitialCards) {
+    // console.log(pushCard);
+    // return <button onClick={pushCard}>yo.</button>;
+    return "yo.";
+  }
 
   const leftCard = cardInfo[roundNumber];
   const rightCard = cardInfo[roundNumber + 1];
@@ -100,12 +140,16 @@ const App = () => {
         Hi
       </button>
       <Pane
+        id="left-pane"
         side={`left ${newRound !== null ? "left-out" : null}`}
-        onAnimationEnd={() => {
-          setNewRound(null);
-          setRoundNumber(roundNumber + 1);
-          setGameStatus("started");
-          setAnswer("waiting-for-answer");
+        onAnimationEnd={(e) => {
+          if (e.animationName !== "fadeIn") {
+            console.log(e);
+            setNewRound(null);
+            setRoundNumber(roundNumber + 1);
+            setGameStatus("started");
+            setAnswer("waiting-for-answer");
+          }
         }}
       >
         <CardDisplay
@@ -150,8 +194,8 @@ const App = () => {
     addNextCard("-from-game-over");
   }
 
-  function addNextCard(str = "") {
-    cardInfo.push(newCard(roundNumber));
+  async function addNextCard(str = "") {
+    cardInfo.push(await newCard(roundNumber));
     console.log(cardInfo);
     setGameStatus("transitioning" + str);
     setNewRound(roundNumber + 1);
