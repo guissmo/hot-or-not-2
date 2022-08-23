@@ -6,7 +6,6 @@ import BackFace from "./BackFace";
 import { GameContext } from "./index";
 
 export default function CardDisplay({
-  key,
   cardInfo,
   myRoundNumber,
   suspensing,
@@ -16,7 +15,6 @@ export default function CardDisplay({
   const activeCard = myRoundNumber === GCon.roundNumber + 1;
   const MyPlaceFace = (
     <PlaceFace
-      key={key}
       name={cardInfo.name}
       temp={cardInfo.temp}
       activeCard={activeCard}
@@ -31,8 +29,7 @@ export default function CardDisplay({
   if (cardInfo.type === "intro" && GCon.roundNumber === 0) {
     return (
       <Card
-        key={key}
-        angle={cardInfo.angle}
+        angle={GCon.cardAngles[myRoundNumber]}
         flippable={cardInfo.type === "intro" || cardInfo.type === "back"}
         onFlip={() => {
           console.log("yeaaa");
@@ -48,8 +45,7 @@ export default function CardDisplay({
   if (cardInfo.type === "back" && GCon.roundNumber === 0) {
     return (
       <Card
-        key={key}
-        angle={cardInfo.angle}
+        angle={GCon.cardAngles[myRoundNumber]}
         flippable={cardInfo.type === "intro" || cardInfo.type === "back"}
         onFlip={() => console.log("hi")}
         activeCard={activeCard}
@@ -62,8 +58,7 @@ export default function CardDisplay({
   if (cardInfo.type === "game-over" && GCon.roundNumber === 0) {
     return (
       <Card
-        key={key}
-        angle={cardInfo.angle}
+        angle={GCon.cardAngles[myRoundNumber]}
         flippable={false}
         activeCard={false}
         front={"Hello"}
@@ -74,8 +69,7 @@ export default function CardDisplay({
 
   return (
     <Card
-      key={key}
-      angle={cardInfo.angle}
+      angle={GCon.cardAngles[myRoundNumber]}
       flippable={cardInfo.type === "intro" || cardInfo.type === "back"}
       onFlip={() => console.log("hi")}
       activeCard={activeCard}

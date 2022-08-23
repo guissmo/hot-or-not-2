@@ -3,7 +3,7 @@ import { GameContext } from "./index";
 import NextRoundButton from "./NextRoundButton";
 
 export default function Card({
-  angle = 0,
+  angle,
   front = null,
   back = null,
   activeCard = false,

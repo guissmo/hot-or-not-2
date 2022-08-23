@@ -634,3 +634,47 @@ button.share {
   width: 100vw;
   height: 100vh;
 }
+
+.fake {
+  opacity: 0.5;
+  animation: opacityThrob 0.2s 0s ease alternate;
+  animation-iteration-count: infinite;
+}
+
+@keyframes opacityThrob {
+  0% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 0.4;
+    width: 81%;
+    height: 81%;
+  }
+}
+
+.react-loader {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  font-size: 7rem;
+  font-weight: 900;
+  padding: 1vmin;
+  text-align: center;
+  color: greenyellow;
+  filter: drop-shadow(2px 2px 2px #000000ee);
+  animation: loadingThrob 1s 0s linear alternate infinite;
+}
+
+@keyframes loadingThrob {
+  0%,
+  60% {
+    color: greenyellow;
+  }
+  40%,
+  100% {
+    color: yellowgreen;
+  }
+}

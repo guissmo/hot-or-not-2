@@ -20,17 +20,7 @@ function randomAngle(max) {
   return ret;
 }
 
-async function newCard(num) {
-  const cityId = randomInteger(200);
-  const myTemp = randomInteger(10) - 5;
-  const name = await getCityName(cityId);
-  console.log("wee" + name);
-  return {
-    angle: randomAngle(5) * (num % 2 ? 1 : -1),
-    name, // + myTemp,
-    temp: myTemp,
-  };
-}
+const cardAngles = [];
 
 const App = () => {
   const [roundNumber, setRoundNumber] = useState(0);
@@ -42,6 +32,18 @@ const App = () => {
   const [finalScore, setFinalScore] = useState(0);
   const [cardInfo, setCardInfo] = useState([]);
   const [loadedInitialCards, setLoadedInitialCards] = useState(false);
+
+  async function newCard(num) {
+    const cityId = randomInteger(200);
+    const myTemp = randomInteger(10) - 5;
+    const name = await getCityName(cityId);
+    cardAngles.push(cardAngles.length % 2 ? randomAngle(5) : -randomAngle(5));
+    return {
+      myRound: num,
+      name, // + myTemp,
+      temp: myTemp,
+    };
+  }
 
   // async function pushCard() {
   //   const introCard = await newCard(0);
@@ -88,9 +90,43 @@ const App = () => {
 
   /*** SKELETON ***/
   if (!loadedInitialCards) {
-    // console.log(pushCard);
-    // return <button onClick={pushCard}>yo.</button>;
-    return "yo.";
+    while (cardAngles.length < 2) {
+      cardAngles.push(cardAngles.length % 2 ? randomAngle(5) : -randomAngle(5));
+    }
+    return (
+      <>
+        <Pane side={`left`}>
+          <div
+            className="card-container fake"
+            style={{ transform: `rotate(${cardAngles[0]}deg)` }}
+          >
+            <div className="card-container-inner null">
+              <div className="pane-interior card-container-front">
+                <div className="pane-interior card-container-back">
+                  <div className="pane-interior intro-card">
+                    <p>This is the intro face.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Pane>
+        <Pane side={`right`}>
+          <div
+            className="card-container fake"
+            style={{ transform: `rotate(${cardAngles[1]}deg)` }}
+          >
+            <div className="card-container-inner null">
+              <div className="pane-interior card-container-front">
+                <div className="pane-interior card-container-back">
+                  <div className="pane-interior back-card"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Pane>
+      </>
+    );
   }
 
   const leftCard = cardInfo[roundNumber];
@@ -127,6 +163,7 @@ const App = () => {
         restartGame,
         gameOver,
         finalScore,
+        cardAngles,
       }}
     >
       {gameStatus === "game-over" ||
@@ -144,7 +181,6 @@ const App = () => {
         side={`left ${newRound !== null ? "left-out" : null}`}
         onAnimationEnd={(e) => {
           if (e.animationName !== "fadeIn") {
-            console.log(e);
             setNewRound(null);
             setRoundNumber(roundNumber + 1);
             setGameStatus("started");
