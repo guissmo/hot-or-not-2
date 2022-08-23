@@ -9,7 +9,7 @@ export default function NextRoundButton() {
       className={`next-button scale-in ${
         GCon.gameStatus === "transitioning" ? "peek-out" : null
       }`}
-      onClick={GCon.startNewRound}
+      onClick={GCon.startNextRound}
     >
       <p>
         <i className="fa-solid fa-play"></i>

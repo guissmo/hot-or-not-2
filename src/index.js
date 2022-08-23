@@ -5,6 +5,7 @@ import Pane from "./Pane";
 import CardDisplay from "./CardDisplay";
 import { createRoot } from "react-dom/client";
 import Modal from "./Modal";
+import GameOverModal from "./GameOverModal";
 
 export const GameContext = React.createContext();
 
@@ -22,7 +23,7 @@ function newCard(num) {
   const myTemp = randomInteger(10) - 5;
   return {
     angle: randomAngle(5) * (num % 2 ? 1 : -1),
-    name: "newCard", // + myTemp,
+    name: "newCard" + myTemp,
     temp: myTemp,
   };
 }
@@ -37,6 +38,8 @@ const App = () => {
   const [gameStatus, setGameStatus] = useState("not-started");
   const [flipped, setFlipped] = useState(0);
   const [answer, setAnswer] = useState("waiting-for-answer"); // waiting-for-answer | higher | lower
+  const [score, setScore] = useState(0);
+  const [finalScore, setFinalScore] = useState(0);
 
   function shownTemperature() {
     return cardInfo[roundNumber].temp;
@@ -56,15 +59,15 @@ const App = () => {
 
   const gameOverModal = (
     <Modal>
-      <div className="pane" style={{ width: "100%", height: "100%" }}>
-        <div className="card-container rotate game-over">
-          <div className="card-container-inner">
-            <div className="pane-interior game-over-card card-container-front">
-              <p>Game Over</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <GameOverModal
+        leftName={cardInfo[roundNumber].name}
+        rightName={cardInfo[roundNumber + 1].name}
+        correctAnswer={
+          cardInfo[roundNumber].temp < cardInfo[roundNumber + 1].temp
+            ? "hotter"
+            : "colder"
+        }
+      />
     </Modal>
   );
 
@@ -79,13 +82,20 @@ const App = () => {
         flipped,
         setFlipped,
         shownTemperature,
-        startNewRound,
+        startNextRound,
+        addNextCard,
+        restartGame,
+        gameOver,
+        finalScore,
       }}
     >
-      {gameStatus === "game-over" ? gameOverModal : null}
+      {gameStatus === "game-over" ||
+      gameStatus === "transitioning-from-game-over"
+        ? gameOverModal
+        : null}
       <button
         style={{ position: "absolute", zIndex: 100 }}
-        onClick={startNewRound}
+        onClick={addNextCard}
       >
         Hi
       </button>
@@ -125,10 +135,25 @@ const App = () => {
     </GameContext.Provider>
   );
 
-  function startNewRound() {
+  function gameOver() {
+    setGameStatus("game-over");
+    setFinalScore(score);
+  }
+
+  function startNextRound() {
+    setScore(score + 1);
+    addNextCard();
+  }
+
+  function restartGame() {
+    setScore(0);
+    addNextCard("-from-game-over");
+  }
+
+  function addNextCard(str = "") {
     cardInfo.push(newCard(roundNumber));
     console.log(cardInfo);
-    setGameStatus("transitioning");
+    setGameStatus("transitioning" + str);
     setNewRound(roundNumber + 1);
   }
 };

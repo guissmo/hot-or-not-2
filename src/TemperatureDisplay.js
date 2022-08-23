@@ -101,7 +101,7 @@ export default function TemperatureDisplay({ temp, showOverlay, activeCard }) {
           ) {
             GCon.setGameStatus("answer-shown");
           } else {
-            GCon.setGameStatus("game-over");
+            GCon.gameOver();
           }
         }, y);
     });
