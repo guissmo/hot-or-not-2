@@ -11,7 +11,6 @@ export default function IntroFace() {
           filter: "drop-shadow(2px 2px 2px #000000ee)",
           height: "100%",
           display: "flex",
-          padding: "20px",
           flexDirection: "column",
           justifyContent: "center",
         }}
