@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+      integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@700&family=Barlow:wght@400;700;900&family=Roboto:wght@300;900&family=Teko:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="modal" style="visibility: hidden">
+      <div class="pane" style="width: 100%; height: 100%">
+        <div class="card-container rotate game-over">
+          <div class="card-container-inner">
+            <div
+              class="pane-interior game-over-card card-container-front scale-in"
+            >
+              <span class="game-over-title">GAME OVER</span>
+              <span class="game-over-info"
+                >San Francisco is hotter than San Francisco.</span
+              >
+              <span class="game-over-score"
+                ><p class="game-over-score-label">SCORE</p>
+                <p>99</p></span
+              >
+              <span class="game-over-buttons"
+                ><button class="share">
+                  <i class="fa-solid fa-share-nodes"></i></button
+                ><button class="restart">
+                  <i class="fa-solid fa-refresh"></i></button
+              ></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="root">
+      <button style="position: absolute; z-index: 100">Hi</button>
+      <div class="pane left null">
+        <div class="card-container" style="transform: rotate(-3deg)">
+          <div class="card-container-inner null">
+            <div class="pane-interior card-container-front">
+              <div class="pane-interior intro-card" style="font-size: 2vmax">
+                <p>
+                  Guess if the next city is
+                  <nobr>hotter (<i class="fa-solid fa-angle-up"></i>)</nobr> or
+                  <nobr>colder (<i class="fa-solid fa-angle-down"></i>)</nobr>
+                  by tapping the corresponding arrow.
+                </p>
+                <div
+                  style="
+                    color: red;
+                    width: 100%;
+                    height: 20vmin;
+                    display: flex;
+                    gap: 10%;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: row;
+                  "
+                >
+                  <div
+                    class="card-container"
+                    style="width: 40%; transform: rotate(-3deg)"
+                  >
+                    <div class="card-container-inner null">
+                      <div
+                        class="pane-interior place-card card-container-front"
+                      >
+                        <div class="photo"></div>
+                        <div class="info">
+                          <p class="p-info info-name" style="font-size: 2vmin">
+                            Hell
+                          </p>
+                          <p
+                            class="p-info info-name"
+                            style="font-size: 0.5vmin"
+                          >
+                            Underworld
+                          </p>
+                        </div>
+                        <div class="temp">
+                          <p style="font-size: 3vmin">-100</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="card-container"
+                    style="width: 40%; transform: rotate(2deg)"
+                  >
+                    <div class="card-container-inner null">
+                      <div
+                        class="pane-interior place-card card-container-front"
+                      >
+                        <div class="photo"></div>
+                        <div class="info">
+                          <p class="p-info info-name" style="font-size: 2vmin">
+                            Funkytown
+                          </p>
+                          <p
+                            class="p-info info-name"
+                            style="font-size: 0.5vmin"
+                          >
+                            USA
+                          </p>
+                        </div>
+                        <div class="temp">
+                          <p style="font-size: 3vmin">?</p>
+                          <div
+                            class="temp-overlay"
+                            style="flex-direction: row-reverse"
+                          >
+                            <button
+                              class="hotter"
+                              style="
+                                font-size: 3vmin;
+                                pointer-events: none;
+                                height: 100%;
+                              "
+                            >
+                              <i class="fa-solid fa-angle-up"></i></button
+                            ><button
+                              class="colder"
+                              style="
+                                font-size: 3vmin;
+                                pointer-events: none;
+                                height: 100%;
+                              "
+                            >
+                              <i class="fa-solid fa-angle-down"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p>Tap this and the other big card to start.</p>
+              </div>
+            </div>
+            <div class="pane-interior card-container-back">
+              <div class="pane-interior intro-card">
+                <p>This is the intro face.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pane right null">
+        <div class="card-container" style="transform: rotate(4deg)">
+          <div class="card-container-inner null">
+            <div class="pane-interior card-container-front">
+              <div class="pane-interior back-card"></div>
+            </div>
+            <div class="pane-interior card-container-back">
+              <div class="pane-interior place-card">
+                <div class="photo">a</div>
+                <div class="info"><p>newCard</p></div>
+                <div class="temp">
+                  <p>?</p>
+                  <div class="temp-overlay">
+                    <button class="hotter">
+                      <i class="fa-solid fa-angle-up"></i></button
+                    ><button class="colder">
+                      <i class="fa-solid fa-angle-down"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="" async defer></script>
+  </body>
+</html>

@@ -6,7 +6,8 @@ import CardDisplay from "./CardDisplay";
 import { createRoot } from "react-dom/client";
 import Modal from "./Modal";
 import GameOverModal from "./GameOverModal";
-import { getCityName } from "./cities";
+import teleportData from "./static/teleport-data";
+import APIKEY from "./static/APIKEY";
 
 export const GameContext = React.createContext();
 
@@ -34,14 +35,42 @@ const App = () => {
   const [loadedInitialCards, setLoadedInitialCards] = useState(false);
 
   async function newCard(num) {
-    const cityId = randomInteger(200);
-    const myTemp = randomInteger(10) - 5;
-    const name = await getCityName(cityId);
+    const cityId = randomInteger(266);
+    // const myTemp = randomInteger(10) - 5;
+
+    const fullName = teleportData._embedded["ua:item"][cityId].full_name;
+    const name = teleportData._embedded["ua:item"][cityId].name;
+    const country =
+      teleportData._embedded["ua:item"][cityId]._links["ua:countries"][0].name;
+    const photoData =
+      teleportData._embedded["ua:item"][cityId]._embedded["ua:images"]
+        .photos[0];
+
+    const latlon =
+      teleportData._embedded["ua:item"][cityId].bounding_box.latlon;
+    const lat = (latlon["north"] + latlon["south"]) / 2;
+    const lon = (latlon["east"] + latlon["west"]) / 2;
+
+    const tempData = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKEY}&units=metric`
+    )
+      .then((res) => res.json())
+      .then((data) => data);
+
+    const myTemp = Math.round(tempData.main.temp);
+
+    // const latlon = teleportData._embedded["ua:item"][cityId].bounding_box.latlon;
+    // const lat = (latlon["north"] + latlon["south"]) / 2;
+    // const lon = (latlon["east"] + latlon["west"]) / 2;
+
     cardAngles.push(cardAngles.length % 2 ? randomAngle(5) : -randomAngle(5));
     return {
       myRound: num,
-      name, // + myTemp,
+      fullName: fullName,
+      name: name,
+      country: country,
       temp: myTemp,
+      photoData,
     };
   }
 
@@ -78,8 +107,8 @@ const App = () => {
           setLoadedInitialCards(true);
           setCardInfo(
             cardInfo.concat([
-              { ...introCard, type: "intro" },
-              { ...secondCard, type: "back" },
+              { ...introCard, type: "back" },
+              { ...secondCard, type: "intro" },
             ])
           );
         }

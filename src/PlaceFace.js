@@ -3,14 +3,22 @@ import Face from "./Face";
 import TemperatureDisplay from "./TemperatureDisplay";
 import Image from "./Image";
 
-export default function PlaceFace({ name, temp, showOverlay, activeCard }) {
+export default function PlaceFace({
+  name,
+  country,
+  temp,
+  photoData,
+  showOverlay,
+  activeCard,
+}) {
   return (
     <Face className="place-card">
       <div className="photo">
-        <Image />
+        <Image src={photoData.image.web} />
       </div>
       <div className="info">
-        <p>{name}</p>
+        <p className="p-info info-name">{name}</p>
+        <p className="p-info info-country">{country}</p>
       </div>
       <TemperatureDisplay
         temp={temp}

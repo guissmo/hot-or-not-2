@@ -16,7 +16,9 @@ export default function CardDisplay({
   const MyPlaceFace = (
     <PlaceFace
       name={cardInfo.name}
+      country={cardInfo.country}
       temp={cardInfo.temp}
+      photoData={cardInfo.photoData}
       activeCard={activeCard}
       showOverlay={
         (GCon.answer === "waiting-for-answer" && activeCard) ||
