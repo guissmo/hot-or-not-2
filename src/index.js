@@ -7,9 +7,19 @@ import { createRoot } from "react-dom/client";
 import Modal from "./Modal";
 import GameOverModal from "./GameOverModal";
 import teleportData from "./static/teleport-data";
+// eslint-disable-next-line no-unused-vars
 import APIKEY from "./static/APIKEY";
 
 export const GameContext = React.createContext();
+
+const HOWMANYBEFOREREPEAT = 250;
+const HOWMANYCITIES = 266;
+
+if (HOWMANYCITIES < HOWMANYBEFOREREPEAT) {
+  throw "Error";
+}
+
+const recentIntegers = [];
 
 function randomInteger(max) {
   const ret = Math.floor(Math.random() * max);
@@ -35,8 +45,15 @@ const App = () => {
   const [loadedInitialCards, setLoadedInitialCards] = useState(false);
 
   async function newCard(num) {
-    const cityId = randomInteger(266);
-    // const myTemp = randomInteger(10) - 5;
+    let cityId = randomInteger(HOWMANYCITIES);
+    while (recentIntegers.includes(cityId)) {
+      cityId = randomInteger(HOWMANYCITIES);
+    }
+    recentIntegers.push(cityId);
+    if (recentIntegers.length > HOWMANYBEFOREREPEAT) {
+      recentIntegers.shift();
+    }
+    console.log(recentIntegers);
 
     const fullName = teleportData._embedded["ua:item"][cityId].full_name;
     const name = teleportData._embedded["ua:item"][cityId].name;
@@ -46,22 +63,21 @@ const App = () => {
       teleportData._embedded["ua:item"][cityId]._embedded["ua:images"]
         .photos[0];
 
-    const latlon =
-      teleportData._embedded["ua:item"][cityId].bounding_box.latlon;
-    const lat = (latlon["north"] + latlon["south"]) / 2;
-    const lon = (latlon["east"] + latlon["west"]) / 2;
+    let myTemp = randomInteger(10) - 5;
+    if (process.env.NODE_ENV && !process.env.NODE_ENV === "development") {
+      const latlon =
+        teleportData._embedded["ua:item"][cityId].bounding_box.latlon;
+      const lat = (latlon["north"] + latlon["south"]) / 2;
+      const lon = (latlon["east"] + latlon["west"]) / 2;
 
-    const tempData = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKEY}&units=metric`
-    )
-      .then((res) => res.json())
-      .then((data) => data);
+      const tempData = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKEY}&units=metric`
+      )
+        .then((res) => res.json())
+        .then((data) => data);
 
-    const myTemp = Math.round(tempData.main.temp);
-
-    // const latlon = teleportData._embedded["ua:item"][cityId].bounding_box.latlon;
-    // const lat = (latlon["north"] + latlon["south"]) / 2;
-    // const lon = (latlon["east"] + latlon["west"]) / 2;
+      myTemp = Math.round(tempData.main.temp);
+    }
 
     cardAngles.push(cardAngles.length % 2 ? randomAngle(5) : -randomAngle(5));
     return {
@@ -199,12 +215,12 @@ const App = () => {
       gameStatus === "transitioning-from-game-over"
         ? gameOverModal
         : null}
-      <button
+      {/* <button
         style={{ position: "absolute", zIndex: 100 }}
         onClick={addNextCard}
       >
         Hi
-      </button>
+      </button> */}
       <Pane
         id="left-pane"
         side={`left ${newRound !== null ? "left-out" : null}`}
