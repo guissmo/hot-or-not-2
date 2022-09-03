@@ -5,15 +5,16 @@ export default function IntroFace() {
   return (
     <Face className="intro-card" style={{ fontSize: "max(2vmax, 30px)" }}>
       <div
-        style={{
-          color: "white",
-          backgroundColor: "rgba(72, 116, 54, 0.5)",
-          filter: "drop-shadow(2px 2px 2px #000000ee)",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
+        className="back-card-inner-div"
+        // style={{
+        //   color: "#eeeeee",
+        //   backgroundColor: "rgba(72, 116, 54, 0.1)",
+        //   filter: "drop-shadow(2px 2px 2px #000000ee)",
+        //   height: "100%",
+        //   display: "flex",
+        //   flexDirection: "column",
+        //   justifyContent: "center",
+        // }}
       >
         <h1>Instructions</h1>
         <p>
