@@ -12,8 +12,9 @@ import APIKEY from "./static/APIKEY";
 
 export const GameContext = React.createContext();
 
-const HOWMANYBEFOREREPEAT = 250;
+const HOWMANYBEFOREREPEAT = 150;
 const HOWMANYCITIES = 266;
+const TESTINGWITHAPI = false;
 
 if (HOWMANYCITIES < HOWMANYBEFOREREPEAT) {
   throw "Error";
@@ -64,7 +65,10 @@ const App = () => {
         .photos[0];
 
     let myTemp = randomInteger(10) - 5;
-    if (process.env.NODE_ENV && !process.env.NODE_ENV === "development") {
+    if (
+      (process.env.NODE_ENV && !process.env.NODE_ENV === "development") ||
+      TESTINGWITHAPI
+    ) {
       const latlon =
         teleportData._embedded["ua:item"][cityId].bounding_box.latlon;
       const lat = (latlon["north"] + latlon["south"]) / 2;

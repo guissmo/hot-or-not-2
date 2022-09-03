@@ -16,7 +16,7 @@ export default function GameOverModal({ leftName, rightName, correctAnswer }) {
           >
             <span className="game-over-title">GAME OVER</span>
             <span className="game-over-info">
-              {rightName} is {correctAnswer} than {leftName}.
+              {rightName} is currently {correctAnswer} than {leftName}.
             </span>
             <span className="game-over-score">
               <p className="game-over-score-label">SCORE</p>

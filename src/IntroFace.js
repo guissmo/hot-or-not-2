@@ -66,7 +66,7 @@ export default function IntroFace() {
             </div>
           </div> */}
         {/* </div> */}
-        <p>Tap this and the other big card to start.</p>
+        <p>Tap this and the logo card to start.</p>
       </div>
     </Face>
   );
