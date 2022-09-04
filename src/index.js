@@ -1,13 +1,10 @@
-import React, { useState, useEffect, StrictMode } from "react";
-import "react-app-polyfill/ie9";
-import "react-app-polyfill/stable";
+import React, { useState, useEffect, useCallback } from "react";
 import Pane from "./Pane";
 import CardDisplay from "./CardDisplay";
 import { createRoot } from "react-dom/client";
 import Modal from "./Modal";
 import GameOverModal from "./GameOverModal";
 import teleportData from "./static/teleport-data";
-// eslint-disable-next-line no-unused-vars
 import APIKEY from "./static/APIKEY";
 
 export const GameContext = React.createContext();
@@ -43,7 +40,7 @@ const App = () => {
   const [score, setScore] = useState(0);
   const [finalScore, setFinalScore] = useState(0);
   const [cardInfo, setCardInfo] = useState([]);
-  const [loadedInitialCards, setLoadedInitialCards] = useState(false);
+  // const [loadedInitialCards, setLoadedInitialCards] = useState(false);
 
   async function newCard(num) {
     let cityId = randomInteger(HOWMANYCITIES);
@@ -65,10 +62,8 @@ const App = () => {
         .photos[0];
 
     let myTemp = randomInteger(10) - 5;
-    if (
-      (process.env.NODE_ENV && !process.env.NODE_ENV === "development") ||
-      TESTINGWITHAPI
-    ) {
+
+    if (!process.env.NODE_ENV === "development" || TESTINGWITHAPI) {
       const latlon =
         teleportData._embedded["ua:item"][cityId].bounding_box.latlon;
       const lat = (latlon["north"] + latlon["south"]) / 2;
@@ -118,28 +113,28 @@ const App = () => {
     }
   }, []);
 
-  useEffect(
-    () =>
-      async function () {
-        if (!loadedInitialCards) {
-          const introCard = await newCard(0);
-          const secondCard = await newCard(1);
-          setLoadedInitialCards(true);
-          setCardInfo(
-            cardInfo.concat([
-              { ...introCard, type: "back" },
-              { ...secondCard, type: "intro" },
-            ])
-          );
-        }
-      },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+  const loadCards = useCallback(async () => {
+    console.log("woo");
+    if (cardInfo.length < 2) {
+      console.log("yay");
+      const introCard = await newCard(0);
+      const secondCard = await newCard(1);
+      setCardInfo(
+        cardInfo.concat([
+          { ...introCard, type: "back" },
+          { ...secondCard, type: "intro" },
+        ])
+      );
+    }
+  }, [cardInfo]);
+  useEffect(() => {
+    console.log("useEffect");
+    loadCards();
+  }, [loadCards]);
 
   /*** SKELETON ***/
-  if (!loadedInitialCards) {
-    while (cardAngles.length < 2) {
+  if (cardInfo.length < 2) {
+    while (cardAngles.length <= 2) {
       cardAngles.push(cardAngles.length % 2 ? randomAngle(5) : -randomAngle(5));
     }
     return (
@@ -293,8 +288,4 @@ const App = () => {
 
 const container = document.getElementById("root");
 const root = createRoot(container);
-root.render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
+root.render(<App />);
