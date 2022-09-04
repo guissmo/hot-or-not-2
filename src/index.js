@@ -183,17 +183,19 @@ const App = () => {
   const nextCard = cardInfo[roundNumber + 2];
 
   const gameOverModal = (
-    <Modal>
-      <GameOverModal
-        leftName={cardInfo[roundNumber].name}
-        rightName={cardInfo[roundNumber + 1].name}
-        correctAnswer={
-          cardInfo[roundNumber].temp < cardInfo[roundNumber + 1].temp
-            ? "hotter"
-            : "colder"
-        }
-      />
-    </Modal>
+    <>
+      <Modal>
+        <GameOverModal
+          leftName={cardInfo[roundNumber].name}
+          rightName={cardInfo[roundNumber + 1].name}
+          correctAnswer={
+            cardInfo[roundNumber].temp < cardInfo[roundNumber + 1].temp
+              ? "hotter"
+              : "colder"
+          }
+        />
+      </Modal>
+    </>
   );
 
   return (

@@ -22,8 +22,8 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="modal" style="visibility: hidden">
-      <div class="pane" style="width: 100%; height: 100%">
+    <div id="modal">
+      <div class="pane full-pane" style="width: 100%; height: 100%">
         <div class="card-container rotate game-over">
           <div class="card-container-inner">
             <div
@@ -47,6 +47,81 @@
           </div>
         </div>
       </div>
+      <div
+        class="pane full-pane"
+        style="width: 100%; height: 100%"
+        style="opacity: 0.5"
+      >
+        <div class="card-container rotate game-over">
+          <div class="card-container-inner">
+            <div class="pane-interior share-card card-container-front scale-in">
+              <span class="share-title">SHARE</span>
+              <span class="share-info"
+                >
+                <div>
+                <p>Or click <a href="#">here</a> to copy to your clipboard.</p>
+                </div>
+                </span
+              >
+              <span class="restart-span game-over-buttons">
+                <button class="restart">
+                  <i class="fa-solid fa-refresh"></i></button
+              >
+            </span>
+              </span>
+              <span class="share-buttons"
+                >
+                <span class="facebook-span">
+                <a
+                  href="https://www.facebook.com/sharer.php?u=https://hotornot.guissmo.com"
+                  target="_blank"
+                  ><button class="facebook share"><i class="fa-brands fa-facebook"></i></button></a
+                >
+                </span>
+                <span class="whatsapp-span">
+                <a
+                  href="https://api.whatsapp.com/send?text=Hot or Not https://hotornot.guissmo.com"
+                  target="_blank"
+                  ><button class="whatsapp share"><i class="fa-brands fa-whatsapp"></i></button></a
+                >
+                </span>
+                <span class="twitter-span">
+                <a
+                href="https://twitter.com/share?url=https://hotornot.guissmo.com&text=Hello sound check&via=jguissmo&hashtags=#hashtag"
+                target="_blank"
+                ><button class="twitter share"><i class="fa-brands fa-twitter"></i></button></a
+                >
+                </span>
+                <span class="mail-span">
+                <a
+                  href="mailto:?subject=Subject&body=Body"
+                  target="_blank"
+                  ><button class="mail share"><i class="fa-solid fa-envelope"></i></button></a
+                >
+                </span>
+                <span class="linkedin-span">
+                <a
+                  href="https://www.linkedin.com/shareArticle?url=https://hotornot.guissmo.com&title=Hot or Not Game"
+                  target="_blank"
+                  ><button class="linkedin share"><i class="fa-brands fa-linkedin"></i></button></a
+                >
+                </span>
+                <span class="reddit-span">
+                <a
+                  href="https://reddit.com/submit?url=https://hotornot.guissmo.com&title=Hot or Not Game"
+                  target="_blank"
+                  ><button class="reddit share"><i class="fa-brands fa-reddit"></i></button></a
+                >
+                </span>
+                <!-- <a
+                  href="https://t.me/share/url?url=https://hotornot.guissmo.com&text=Hot or Not"
+                  target="_blank"
+                  ><button class="share">TE</button></a
+                > -->
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div id="root">
       <button style="position: absolute; z-index: 100">Hi</button>
@@ -56,14 +131,18 @@
             <div class="pane-interior card-container-front">
               <div class="pane-interior place-card">
                 <div class="photo">
-                  <!-- <img
-                    src="https://d13k13wj6adfdf.cloudfront.net/urban_areas/manila-5150275531.jpg"
-                    style="object-fit: cover; width: 100%"
-                  /> -->
                   <img
-                    src="https://d13k13wj6adfdf.cloudfront.net/urban_areas/paris-0ae0bb626e.jpg"
-                    style="object-fit: cover; width: 100%"
+                    src="https://d13k13wj6adfdf.cloudfront.net/urban_areas/jakarta_web-69216c8025.jpg"
                   />
+                  <div class="photo-credits-container">
+                    <div class="photo-credits">
+                      <a
+                        href="https://www.flickr.com/photos/calvinsmith/8017326293/"
+                        ><i class="fa-solid fa-camera-retro"></i> Calvin
+                        Smith</a
+                      >
+                    </div>
+                  </div>
                 </div>
                 <div class="info">
                   <p class="p-info info-name">newCard</p>
@@ -88,7 +167,7 @@
             </div>
             <div class="pane-interior card-container-back">
               <div class="pane-interior place-card">
-                <div class="photo">a</div>
+                <div class="photo"><div class="photo-credits">A</div></div>
                 <div class="info"><p>newCard</p></div>
                 <div class="temp">
                   <p>?</p>

@@ -15,6 +15,20 @@ export default function PlaceFace({
     <Face className="place-card">
       <div className="photo">
         <Image src={photoData.image.web} />
+        {photoData.attribution ? (
+          <div className="photo-credits-container">
+            <div className="photo-credits">
+              <a
+                href={photoData.attribution.source}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <i className="fa-solid fa-camera-retro"></i>{" "}
+                {photoData.attribution.photographer}
+              </a>
+            </div>
+          </div>
+        ) : null}
       </div>
       <div className="info">
         <p className="p-info info-name">{name}</p>
