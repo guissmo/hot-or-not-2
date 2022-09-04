@@ -134,6 +134,8 @@ body {
 
 .intro-card p {
   text-align: center;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 .place-card {
   border: 5px white solid;
@@ -529,10 +531,11 @@ body {
 
 .game-over {
   height: 50ex;
+  min-height: 50vh;
+  min-width: 50vw;
   max-height: 90%;
   max-width: 90%;
   width: 50rem;
-  min-width: 200px;
 }
 
 .game-over-card {
@@ -654,6 +657,20 @@ button.share {
   opacity: 0.5;
   animation: opacityThrob 0.2s 0s ease alternate;
   animation-iteration-count: infinite;
+}
+
+.throb {
+  animation: throb 0.2s 0s ease alternate;
+  animation-iteration-count: infinite;
+}
+
+@keyframes throb {
+  0% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 0.4;
+  }
 }
 
 @keyframes opacityThrob {
@@ -1013,4 +1030,23 @@ button.share {
 
 .mail-span {
   grid-area: mail;
+}
+
+.spinning {
+  animation: spin 1s 0s ease-in-out infinite;
+}
+
+@keyframes spin {
+  0% {
+    opacity: 0.7;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+
+  100% {
+    transform: rotate(360deg);
+    opacity: 0.7;
+  }
 }

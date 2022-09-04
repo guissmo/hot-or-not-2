@@ -72,11 +72,21 @@ export function ShareModal({ leftName, rightName, score }) {
             <span className="restart-span game-over-buttons">
               <button
                 className="restart"
-                onClick={() => {
-                  GCon.restartGame();
-                }}
+                onClick={
+                  GCon.gameStatus === "game-over"
+                    ? () => {
+                        GCon.restartGame();
+                      }
+                    : null
+                }
               >
-                <i className="fa-solid fa-refresh"></i>
+                <i
+                  className={`fa-solid fa-refresh ${
+                    GCon.gameStatus === "loading-next-card-from-game-over"
+                      ? "spinning"
+                      : null
+                  }`}
+                ></i>
               </button>
             </span>
             <span className="share-buttons">
@@ -195,11 +205,22 @@ export default function GameOverModal({ leftName, rightName, correctAnswer }) {
                 </button>
                 <button
                   className="restart"
-                  onClick={() => {
-                    GCon.restartGame();
-                  }}
+                  onClick={
+                    GCon.gameStatus === "game-over"
+                      ? () => {
+                          GCon.restartGame();
+                        }
+                      : null
+                  }
                 >
-                  <i className="fa-solid fa-refresh"></i>
+                  <i
+                    className={`fa-solid fa-refresh ${
+                      GCon.gameStatus === "loading-next-card-from-game-over" ||
+                      GCon.gameStatus === "transitioning-from-game-over"
+                        ? "spinning"
+                        : null
+                    }`}
+                  ></i>
                 </button>
               </span>
             </div>

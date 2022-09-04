@@ -46,7 +46,8 @@ export default function Card({
         {faces}
       </div>
       {(GCon.gameStatus === "answer-shown" ||
-        GCon.gameStatus === "transitioning") &&
+        GCon.gameStatus === "transitioning" ||
+        GCon.gameStatus === "loading-next-card") &&
       activeCard ? (
         <NextRoundButton />
       ) : null}

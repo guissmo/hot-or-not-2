@@ -218,7 +218,8 @@ const App = () => {
       }}
     >
       {gameStatus === "game-over" ||
-      gameStatus === "transitioning-from-game-over"
+      gameStatus === "transitioning-from-game-over" ||
+      gameStatus === "loading-next-card-from-game-over"
         ? gameOverModal
         : null}
       {/* <button
@@ -282,9 +283,10 @@ const App = () => {
   }
 
   async function addNextCard(str = "") {
+    if (flipped >= 2) setGameStatus("loading-next-card" + str);
     cardInfo.push(await newCard(roundNumber));
     console.log(cardInfo);
-    setGameStatus("transitioning" + str);
+    if (flipped >= 2) setGameStatus("transitioning" + str);
     setNewRound(roundNumber + 1);
   }
 };
