@@ -63,7 +63,10 @@ const App = () => {
 
     let myTemp = randomInteger(10) - 5;
 
-    if (!process.env.NODE_ENV === "development" || TESTINGWITHAPI) {
+    if (
+      (process.env.NODE_ENV && process.env.NODE_ENV !== "development") ||
+      TESTINGWITHAPI
+    ) {
       const latlon =
         teleportData._embedded["ua:item"][cityId].bounding_box.latlon;
       const lat = (latlon["north"] + latlon["south"]) / 2;
