@@ -327,13 +327,13 @@ body {
     top: 0;
   }
   100% {
-    top: -50vh;
+    top: -50%;
   }
 }
 
 @keyframes moveUp {
   0% {
-    top: 50vh;
+    top: 50%;
   }
   100% {
     top: 0;
@@ -342,10 +342,10 @@ body {
 
 @keyframes enterUp {
   0% {
-    top: 100vh;
+    top: 100%;
   }
   100% {
-    top: 50vh;
+    top: 50%;
   }
 }
 
