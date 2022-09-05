@@ -14,7 +14,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   background-color: red;
   background-color: #ffffff;
@@ -26,7 +26,7 @@ body {
   align-items: center;
   justify-content: center;
   position: absolute;
-  height: 100vh;
+  height: 100%;
   width: 50vw;
 }
 
@@ -309,10 +309,10 @@ body {
 
 @keyframes enterTop {
   0% {
-    top: 100vhf;
+    top: 100%;
   }
   100% {
-    top: 50vhf;
+    top: 50vh;
   }
 }
 
@@ -338,7 +338,7 @@ body {
 
 @keyframes enterUp {
   0% {
-    top: 100vh;
+    top: 100%;
   }
   100% {
     top: 50vh;
@@ -411,7 +411,7 @@ body {
   }
 
   .outside {
-    top: 100vh;
+    top: 100%;
     left: 0;
   }
 
@@ -646,7 +646,7 @@ button.share {
 
 .full-pane {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
@@ -685,7 +685,7 @@ button.share {
 
 .react-loader {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
