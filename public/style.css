@@ -789,9 +789,7 @@ button.share {
 }
 
 .hot i {
-  position: relative;
-  top: -0.05ex;
-  left: 0.015em;
+  margin-left: 0.015em;
 }
 
 .or {
@@ -824,8 +822,7 @@ button.share {
 }
 
 .not i {
-  position: relative;
-  left: 0.015em;
+  margin-left: 0.015em;
 }
 
 .back-card {
