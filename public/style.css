@@ -392,7 +392,7 @@ body {
 
 @media (max-aspect-ratio: 5/3) {
   .pane {
-    height: 50vh;
+    height: 50%;
     width: 100vw;
   }
 
@@ -406,7 +406,7 @@ body {
   }
 
   .right {
-    top: 50vh;
+    top: 50%;
     left: 0;
   }
 
@@ -415,7 +415,7 @@ body {
   }
 
   .outside {
-    top: 100vh;
+    top: 100%;
     left: 0;
   }
 
